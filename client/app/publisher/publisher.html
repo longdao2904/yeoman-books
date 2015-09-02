@@ -1,0 +1,52 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  </br>
+  <div class="row">
+    <h1 class="col-lg-8">PUBLISHER MANAGEMENT</h1>
+    <form class="form-group col-lg-4">
+      <p class="input-group">
+        <input type="text" class="form-control" placeholder="More publisher here..." ng-model="pName">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary" ng-click="addPublisher()" ng-disabled="!pName">Add New</button>
+        </span>
+      </p>
+    </form>
+  </div>
+  <div id="grid" ui-grid="gridOptions" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-cellnav></div>
+  <!--<table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Publisher name</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="publisher in publishers" style="cursor: pointer">
+              <a>
+                  <td>
+                      <div ng-hide="publisher.editing">{{publisher.name}}</div>
+                      <div>
+                          <form ng-submit="doneEditing(publisher)">
+                              <strong>
+                                  <em>
+                                      <input type="text" class="form-control" ng-show="publisher.editing" ng-model="publisher.name" ng-blur="doneEditing(publisher)" autofocus />
+                                  </em>
+                              </strong>
+                          </form>
+                      </div>
+                  </td>
+                  <td>
+                      <button ng-hide="publisher.editing" type="button" class="btn btn-primary" ng-click="editPublisher(publisher)">Edit</button>
+                      <button ng-show="publisher.editing" type="button" class="btn btn-success" ng-blur="doneEditing(publisher)">Save</button>
+                      <button ng-hide="publisher.editing" type="button" class="btn btn-danger" ng-click="deletePublisher(publisher)">Delete</button>
+                  </td>
+              </a>
+          </tr>
+      </tbody>
+  </table>-->
+</div>
+<footer class="footer">
+  <div class="container">
+    <p>MVP | MEAN
+  </div>
+</footer>

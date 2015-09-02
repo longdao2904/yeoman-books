@@ -1,0 +1,95 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  <div class="row">
+    <!--title-->
+    <h1 class="page-header">BOOKS MANAGEMENT</h1>
+    <p>
+      <button type="button" class="btn btn-info btn-sm" ng-click="viewDetail()">View book details</button>
+      <button type="button" class="btn btn-default btn-sm" ng-click="toggleAddMore()">Add book</button>
+    </p>
+    <div id="grid" ui-grid="gridOptions" ui-grid-pagination ui-grid-edit ui-grid-row-edit ui-grid-cellnav ui-grid-selection></div>
+    <div ng-show="!ModeIs('none')" class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Book information</h3>
+      </div>
+      <div class="panel-body">
+        <!--Edit and Delete form-->
+        <form class="form-horizontal" name="bookForm">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="bName" placeholder="Name of book..." ng-model="bName" required>
+            </div>
+            <div class="col-sm-3"><span class="text-danger" ng-show="bookForm.bName.$error.required">Required!</span></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Author</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="bAuthor" placeholder="Author..." ng-model="bAuthor" required>
+            </div>
+            <div class="col-sm-3"><span class="text-danger" ng-show="bookForm.bAuthor.$error.required">Required!</span></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-6">
+              <textarea rows="5" class="form-control" placeholder="Book description..." ng-model="bDesc"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="chkActive" class="col-sm-3 control-label">ISBN</label>
+            <div class="col-sm-6">
+              <input type="text" name="bISBN" class="form-control" placeholder="ISBN..." ng-model="bISBN" ng-pattern="^\d{9}[\d|X]$">
+            </div>
+            <div class="col-sm-3"><span class="text-danger" ng-show="bookForm.bISBN.$error">Must match with ISBN format - 1234123412 | 123412341X</span></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Published on</label>
+            <div class="col-sm-6">
+              <input type="date" name="datePicker" class="form-control" placeholder="Published on..." data-ng-model="bDate" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Number of Pages</label>
+            <div class="col-sm-6">
+              <input type="number" name="bPage" class="form-control" placeholder="Number of pages..." ng-model="bPages">
+            </div>
+            <div class="col-sm-3"><span class="text-danger" ng-show="bookForm.bPage.$error.number">Must be number!</span></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Publisher</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="selectedPublisher" data-ng-options="p._id as p.name for p in publishers" data-ng-model="selectedPublisherId" required></select>
+            </div>
+          </div>
+          <span class="col-sm-offset-2 col-sm-10">
+            <button ng-show="ModeIs('new')" type="submit" class="btn btn-primary" ng-click="addBook()" ng-disabled="bookForm.pSelector.$error.required || bookForm.datePicker.$error.required || bookForm.$invalid && bookForm.$dirty">Add New</button>
+            <button ng-show="ModeIs('editing')" type="submit" class="btn btn-primary" ng-click="saveChanges(selectedItems)"
+                    ng-disabled="bookForm.pSelector.$error.required || bookForm.datePicker.$error.required || bookForm.$invalid && bookForm.$dirty">
+              Save changes
+            </button>
+            <button ng-show="ModeIs('editing')" type="submit" class="btn btn-warning" ng-click="toggleDelete()"
+                    ng-disabled="bookForm.pSelector.$error.required || bookForm.datePicker.$error.required || bookForm.$invalid && bookForm.$dirty">
+              Delete
+            </button>
+            <button ng-show="ModeIs('deleting')" type="submit" class="btn btn-danger" ng-click="deleteBook(selectedItems)"
+                    ng-disabled="bookForm.pSelector.$error.required || bookForm.datePicker.$error.required || bookForm.$invalid && bookForm.$dirty">
+              Confirm delete
+            </button>
+            <button type="submit" class="btn btn-default" ng-click="dismiss()">Cancel</button>
+            <div class="form-group has-error">
+              <p class="help-block" ng-show="bookForm.selectedPublisher.$error.required && submitted">Please select a publisher!</p>
+              <p class="help-block" ng-show="bookForm.datePicker.$error.required && submitted">Please enter published date!</p>
+              <p class="help-block">{{ errors.other }}</p>
+            </div>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p>
+      <a>MVP | MEAN</a>
+    </p>
+</footer>
